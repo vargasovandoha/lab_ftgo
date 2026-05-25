@@ -20,13 +20,13 @@ Cada maestrante entrega en un repositorio individual con branch `release/exam-la
 | # | Artefacto | Ruta esperada | Mínimo aceptable |
 | :---: | :--- | :--- | :--- |
 | **1** | PRD ligero de FTGO | `docs/prd.md` | Secciones contexto, stakeholders, capacidades, NFRs, alcance |
-| **2** | FSD ligero | `docs/fsd.md` | $\ge5$ UCs con Given/When/Then explícito |
-| **3** | ADR 1 (estilo arquitectónico) | `docs/adr/0001-*.md` | Opciones consideradas ($\ge3$), pros/contras, decisión formal |
-| **4** | ADR 2 (patrón de datos / IPC) | `docs/adr/0002-*.md` | Segunda decisión clave (ej. Saga vs 2PC, CQRS, etc.) |
-| **5** | Diagrama C4 nivel 1 (Context) | `docs/diagrams/c4_context.mmd` | Mermaid C4Context válido y Contenedores |
+| **2** | FSD ligero | `docs/fsd.md` | $\ge$ 5 UCs con Given/When/Then explícito |
+| **3** | ADR 1 (estilo arquitectónico) | `docs/adr/0001-*.md` | Opciones, decisión formal, consecuencias positivas/negativas |
+| **4** | ADR 2 (patrón de datos o descomposición, decisión IPC) | `docs/adr/0002-*.md` | Segunda decisión clave (ej. Saga vs 2PC, CQRS, etc.) Mismo formato que ADR 1 |
+| **5** | Diagrama C4 nivel 1 (Context) | `docs/diagrams/c4_context.mmd` | Mermaid C4Context válido |
 | **6** | Diagrama C4 nivel 2 (Container) | `docs/diagrams/c4_container.mmd` | Mermaid C4Container válido |
-| **7** | >= 2 Prompts mejorados | `prompts_enahnced/` | Archivos `.md` con cambios aplicados sobre los semilla del Anexo B |
-| **8** | README explicativo | `README.md` en la raiz | Guía de ejecución de prompts, comandos exactos y métricas |
+| **7** | >= 2 Prompts mejorados | `prompts_enahanced/` | Archivos `.md` con cambios aplicados sobre los semilla del Anexo B |
+| **8** | README explicativo | `README.md` en la raiz | Estructura del repo, guía de ejecución de prompts y métricas declaradas |
 
 ## Materiales provistos
 Los materiales del examen están incluidos en los Anexos A y B de este documento:

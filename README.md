@@ -50,8 +50,11 @@ Requiere `docs/prd.md` ya generado. Prompt: [prompts_enhanced/fsd_enhanced.md](p
 
 ```text
 @prompts_enhanced/fsd_enhanced.md @docs/prd.md @brief.md
-Genera docs/fsd.md con ≥ 5 casos de uso y Given/When/Then explícito por UC.
+
+Sigue exactamente las instrucciones del prompt. Genera docs/fsd.md con los 7 UCs de la tabla de Context, Given/When/Then explícito por UC, y ejecuta el Checklist de auto-revisión antes de emitir el output.
 Modelo: Sonnet. Temperatura: 0.2.
+
+Luego quiero anexar "Checklist de auto-revisión ejecutado antes de emitir" al final del archivo @prompts_enhanced/fsd_enhanced.md
 ```
 
 ---
