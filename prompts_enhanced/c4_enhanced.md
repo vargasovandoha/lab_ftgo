@@ -21,7 +21,7 @@ Produce 2 diagramas Mermaid del caso FTGO:
 
 ## Context
 - **Documentos fuente:**
-  - `docs/pdr.md` (stakeholders + capacidades + NFRs).
+  - `docs/prd.md` (stakeholders + capacidades + NFRs).
   - `docs/adr/0001-*.md` y `docs/adr/0002-*.md` (decisiones arquitectónicas que condicionan los containers).
   - el brief del Anexo A (sistemas externos, stakeholders).
 - **TODO 1 (Context — sistema y stakeholders del brief):** enumera explícitamente el sistema principal y todas las personas/sistemas externos que deben aparecer en el diagrama de contexto. *Sin esta lista el diagrama omite externos clave del brief.*

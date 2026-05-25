@@ -18,8 +18,8 @@ Eres un arquitecto de software senior con 10+ años en marketplaces de delivery.
 Genera un PRD ligero para FTGO en formato Markdown, partiendo del brief `brief.md` del Anexo A de este documento. El PRD debe tener entre 2 y 4 páginas equivalentes y servir como entrada para un FSD y para 2 ADRs arquitectónicos.
 
 ## Context
-- **Documento fuente principal:** el brief del Anexo A (contexto de negocio, stakeholders, capacidades, NFRs, 3 user stories semilla).
-- **Documento fuente secundario:** el PDF *Microservices Patterns* (caps 1-2 obligatorios).
+- **Documento fuente principal:** el brief del Anexo A `brief.md` (contexto de negocio, stakeholders, capacidades, NFRs, 3 user stories semilla).
+- **Documento fuente secundario:** el PDF *Microservices Patterns* `MicroservicesPatterns.pdf` (caps 1-2 obligatorios).
 - **Context — Stakeholders:** Consumidor, Restaurante, Courier, Empleado FTGO, Equipo de arquitectura y Sistemas externos.
 - **Context — Capacidades:** Consumer Management, Restaurant Management, Order Taking, Order Fulfillment, Delivery, Billing & Accounting, Notifications.
 - **Restricciones de dominio:** no inventar stakeholders, capacidades o NFRs fuera del brief. Cada NFR del PRD debe poder rastrearse a una entrada de la sección A.4 del brief `brief.md`.
@@ -168,3 +168,38 @@ Se rellenaron los cuatro huecos TODO del Anexo B y se añadió la sección **Ver
 ---
 ### Procedencia
 Prompt elaborado a partir del material del examen-laboratorio FTGO (Anexo B). [Opcional: si usaste material del producto grupal, indica qué tomaste y qué modificaste para cumplir antiplagio del `intro.md`.]
+
+### Métrica de tres corridas
+Check	Resultado
+V1 — 5 secciones H2	S
+V2 — 6 stakeholders con [Brief §A.2]	S
+V3 — Capacidades 3.1–3.7	S
+V4 — ≥5 NFRs con Métrica/Origen/Justificación	S (6 NFRs)
+V5 — 0 NFRs sin tag [Brief §A.4	S
+V6 — ≥4 bullets In scope (incluye Strangler Fig)	S (5 bullets)
+V7 — ≥4 bullets Out of scope (incluye monolito legacy)	S (5 bullets)
+V8 — Sin dominio inventado fuera del brief	S
+V1–V8 = 8/8. Este es tu corrida 1 para la tabla de métricas. Puedes ejecutar el mismo comando dos veces más en chats nuevos para completar las 3 corridas requeridas.
+---
+#	Criterio	Resultado
+V1	≥ 5 secciones H2 (§1–§5)	S — 6 (incluye Verification)
+V2	6 filas de stakeholders con [Brief §A.2]	S — 7 marcas
+V3	Capacidades 3.1–3.7 (7 H3)	S — 7
+V4	≥ 5 NFRs con Métrica / Origen / Justificación	S — 7 NFRs
+V5	0 NFRs sin tag [Brief §A.4	S — vacío
+V6	≥ 4 bullets In scope (incluye Strangler Fig)	S — 5
+V7	≥ 4 bullets Out of scope (incluye monolito legacy)	S — 6
+V8	Sin stakeholders/capacidades/NFRs inventados	S
+V1–V8 = S. PRD válido. El documento cubre los 7 bounded contexts (§3.1–3.7), 6 stakeholders del brief, 7 NFRs trazados a [Brief §A.4] y la estrategia Strangler Fig en el alcance. Listo para usarse como entrada del FSD y los ADRs.
+---
+The file already contains a complete PRD. Let me verify all V1–V8 criteria against the existing content:
+#	Criterio	Resultado
+V1	5 secciones H2 (§1–§5)	S
+V2	6 filas en tabla Stakeholders, todas con [Brief §A.2]	S
+V3	Subsecciones H3 numeradas 3.1–3.7 (7 capacidades del brief §A.3)	S
+V4	7 NFRs con Métrica, Origen y Justificación	S
+V5	0 NFRs sin tag [Brief §A.4	S
+V6	5 bullets In scope, incluye Strangler Fig	S
+V7	5 bullets Out of scope, incluye monolito legacy	S
+V8	Sin stakeholders, capacidades ni NFRs inventados	S
+docs/prd.md pasa V1–V8 = 8/8. El documento cubre las 7 capacidades (§3.1–§3.7), 6 stakeholders trazados al brief §A.2, y 7 NFRs todos con [Brief §A.4 …]. Listo para usarse como entrada del FSD y los ADRs.

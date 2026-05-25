@@ -19,7 +19,7 @@ Cada maestrante entrega en un repositorio individual con branch `release/exam-la
 
 | # | Artefacto | Ruta esperada | Mínimo aceptable |
 | :---: | :--- | :--- | :--- |
-| **1** | PRD ligero de FTGO | `docs/pdr.md` | Secciones contexto, stakeholders, capacidades, NFRs, alcance |
+| **1** | PRD ligero de FTGO | `docs/prd.md` | Secciones contexto, stakeholders, capacidades, NFRs, alcance |
 | **2** | FSD ligero | `docs/fsd.md` | $\ge5$ UCs con Given/When/Then explícito |
 | **3** | ADR 1 (estilo arquitectónico) | `docs/adr/0001-*.md` | Opciones consideradas ($\ge3$), pros/contras, decisión formal |
 | **4** | ADR 2 (patrón de datos / IPC) | `docs/adr/0002-*.md` | Segunda decisión clave (ej. Saga vs 2PC, CQRS, etc.) |

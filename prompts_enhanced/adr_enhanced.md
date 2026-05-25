@@ -19,7 +19,7 @@ A partir del PRD + FSD ya generados y del brief de FTGO (Anexo A), produce 1 ADR
 
 ## Context
 - **Documentos fuente:**
-  - `docs/pdr.md` (NFRs y capacidades).
+  - `docs/prd.md` (NFRs y capacidades).
   - `docs/fsd.md` (UCs derivados).
   - el brief del Anexo A (restricciones técnicas).
   - el PDF *Microservices Patterns* (caps relevantes según la decisión).
