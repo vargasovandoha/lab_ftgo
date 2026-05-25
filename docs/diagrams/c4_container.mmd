@@ -1,0 +1,73 @@
+C4Container
+    title FTGO – Diagrama de contenedores (nivel 2)
+
+    Person(consumer, "Consumidor", "Usuario móvil/web que ordena comida")
+    Person(restaurant, "Restaurante", "Operador de cocina; gestiona tickets")
+    Person(courier, "Courier", "Repartidor; recibe asignaciones")
+    Person(ftgo_staff, "Empleado FTGO", "Back office; reportes e incidentes")
+
+    System_Ext(stripe, "Stripe", "Pasarela de pago (PCI-DSS delegado)")
+    System_Ext(google_maps, "Google Maps", "Geocodificación y rutas")
+    System_Ext(sendgrid, "SendGrid", "Envío de emails")
+    System_Ext(twilio, "Twilio", "SMS y push notifications")
+
+    System_Boundary(ftgo, "FTGO Platform") {
+        Container(mobile_app, "Mobile App", "React Native", "App del consumidor para ordenar comida y hacer tracking")
+        Container(web_admin, "Web Admin", "React", "Dashboard back office para empleados FTGO")
+        Container(api_gw, "API Gateway", "Spring Cloud Gateway", "Enrutamiento, autenticación y rate limiting")
+
+        Container(consumer_svc, "Consumer Service", "Java 17/Spring Boot", "Registro, perfiles, direcciones y preferencias [Brief §A.3-1]")
+        ContainerDb(consumer_db, "Consumer DB", "PostgreSQL 15", "Datos de consumidores (GDPR)")
+
+        Container(restaurant_svc, "Restaurant Service", "Java 17/Spring Boot", "Menús, horarios y disponibilidad de restaurantes [Brief §A.3-2]")
+        ContainerDb(restaurant_db, "Restaurant DB", "PostgreSQL 15", "Datos de restaurantes y menús")
+
+        Container(order_svc, "Order Service", "Java 17/Spring Boot", "Orquestador de saga; toma de pedidos y estado de saga [ADR-0002]")
+        ContainerDb(order_db, "Order DB", "PostgreSQL 15", "Pedidos, saga state y outbox pattern")
+
+        Container(kitchen_svc, "Kitchen Service", "Java 17/Spring Boot", "Tickets de cocina y estado de preparación [Brief §A.3-4]")
+        ContainerDb(kitchen_db, "Kitchen DB", "PostgreSQL 15", "Tickets y estados de preparación")
+
+        Container(delivery_svc, "Delivery Service", "Java 17/Spring Boot", "Asignación de couriers y tracking en tiempo real [Brief §A.3-5]")
+        ContainerDb(delivery_db, "Delivery DB", "PostgreSQL 15", "Asignaciones de couriers y posiciones")
+
+        Container(billing_svc, "Billing Service", "Java 17/Spring Boot", "Cobros, comisiones y payouts; scope PCI-DSS [Brief §A.3-6]")
+        ContainerDb(billing_db, "Billing DB", "PostgreSQL 15", "Transacciones, comisiones y payouts")
+
+        Container(notification_svc, "Notification Service", "Java 17/Spring Boot", "Emails, SMS y push notifications [Brief §A.3-7]")
+        ContainerDb(notification_db, "Notification DB", "PostgreSQL 15", "Preferencias de notificación y registro de envíos")
+
+        ContainerQueue(kafka, "Event Broker", "Apache Kafka", "Bus de eventos de dominio; comandos y respuestas de saga [ADR-0002]")
+    }
+
+    Rel(consumer, mobile_app, "Ordena comida y consulta estado", "iOS/Android")
+    Rel(ftgo_staff, web_admin, "Opera back office", "HTTPS/Browser")
+    Rel(restaurant, kitchen_svc, "Acepta/rechaza tickets de cocina", "JSON/HTTPS, REST")
+    Rel(courier, delivery_svc, "Acepta asignaciones y reporta posición", "JSON/HTTPS, REST")
+
+    Rel(mobile_app, api_gw, "Envía requests", "JSON/HTTPS, REST")
+    Rel(web_admin, api_gw, "Envía requests", "JSON/HTTPS, REST")
+
+    Rel(api_gw, consumer_svc, "Autentica y enruta", "JSON/HTTPS, REST")
+    Rel(api_gw, order_svc, "Crea y consulta pedidos", "JSON/HTTPS, REST")
+    Rel(api_gw, restaurant_svc, "Consulta menús y disponibilidad", "JSON/HTTPS, REST")
+    Rel(api_gw, delivery_svc, "Consulta estado de entrega", "JSON/HTTPS, REST")
+
+    Rel(consumer_svc, consumer_db, "Lee/Escribe", "JDBC")
+    Rel(restaurant_svc, restaurant_db, "Lee/Escribe", "JDBC")
+    Rel(order_svc, order_db, "Persiste saga state y outbox", "JDBC")
+    Rel(kitchen_svc, kitchen_db, "Lee/Escribe", "JDBC")
+    Rel(delivery_svc, delivery_db, "Lee/Escribe", "JDBC")
+    Rel(billing_svc, billing_db, "Lee/Escribe", "JDBC")
+    Rel(notification_svc, notification_db, "Lee/Escribe", "JDBC")
+
+    Rel(order_svc, kafka, "Publica AuthorizePayment, CreateTicket, AssignCourier", "Kafka protocol, async")
+    Rel(billing_svc, kafka, "Publica PaymentApproved / PaymentFailed", "Kafka protocol, async")
+    Rel(kitchen_svc, kafka, "Publica TicketAccepted / TicketRejected", "Kafka protocol, async")
+    Rel(delivery_svc, kafka, "Publica CourierAssigned / DeliveryCompleted", "Kafka protocol, async")
+    Rel(notification_svc, kafka, "Consume eventos de todos los servicios", "Kafka protocol, async")
+
+    Rel(billing_svc, stripe, "Autoriza y procesa cobros", "JSON/HTTPS, REST")
+    Rel(delivery_svc, google_maps, "Calcula rutas y geocodifica", "JSON/HTTPS, REST")
+    Rel(notification_svc, sendgrid, "Envía emails de confirmación", "JSON/HTTPS, REST")
+    Rel(notification_svc, twilio, "Envía SMS y push notifications", "JSON/HTTPS, REST")

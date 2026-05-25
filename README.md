@@ -4,14 +4,50 @@ Guía mínima para reproducir la generación de artefactos con los prompts mejor
 
 **Entrega:** branch `release/exam-lab`.
 
+---
+
+## Estructura del repositorio
+
+```
+lab_ftgo/
+├── brief.md                          # Descripción del dominio FTGO
+├── intro.md                          # Enunciado del laboratorio
+├── README.md                         # Este archivo
+├── MicroservicesPatterns.pdf         # Referencia bibliográfica
+│
+├── prompts_seed/                     # Prompts originales (sin modificar)
+│   ├── 1_PRD-Lightweight.md
+│   ├── 2_FSD-Lightweight.md
+│   ├── 3_ADR.md
+│   └── 4_C4.md
+│
+├── prompts_enhanced/                 # Prompts mejorados (usados para generar artefactos)
+│   ├── prd_enhanced.md
+│   ├── fsd_enhanced.md
+│   ├── adr_enhanced.md
+│   └── c4_enhanced.md
+│
+└── docs/                             # Artefactos generados
+    ├── prd.md
+    ├── fsd.md
+    ├── adr/
+    │   ├── 0001-estilo-arquitectonico.md
+    │   └── 0002-patron-ipc.md
+    └── diagrams/
+        ├── c4_context.mmd
+        └── c4_container.mmd
+```
+
+---
+
 ### Rutas de artefactos (minúsculas)
 
 | Artefacto | Ruta |
 | :--- | :--- |
 | PRD | `docs/prd.md` |
 | FSD | `docs/fsd.md` |
-| ADR 1 | `docs/adr/0001-*.md` |
-| ADR 2 | `docs/adr/0002-*.md` |
+| ADR 1 | `0001-estilo-arquitectonico.md` |
+| ADR 2 | `0002-patron-ipc.md` |
 | C4 contexto | `docs/diagrams/c4_context.mmd` |
 | C4 contenedores | `docs/diagrams/c4_container.mmd` |
 
@@ -63,8 +99,11 @@ Luego quiero anexar "Checklist de auto-revisión ejecutado antes de emitir" al f
 
 ```text
 @prompts_enhanced/adr_enhanced.md @docs/prd.md @docs/fsd.md @brief.md
-Genera docs/adr/0001-estilo-arquitectonico.md (≥ 3 opciones, pros/contras, decisión formal).
-Modelo: Sonnet u Opus. Temperatura: 0.2.
+
+Sigue exactamente las instrucciones del prompt. Genera docs/adr/0001-estilo-arquitectonico.md
+Modelo: Sonnet. Temperatura: 0.3.
+
+Luego anexar metricas a @prompts_enhanced/adr_enhanced.md
 ```
 
 ---
@@ -82,13 +121,81 @@ Modelo: Sonnet u Opus. Temperatura: 0.2.
 ## Comando — C4 (`docs/diagrams/`)
 
 ```text
-@prompts_enhanced/c4_enhanced.md @docs/prd.md @docs/adr/0001-estilo-arquitectonico.md @docs/adr/0002-patron-datos-ipc.md
-Genera docs/diagrams/c4_context.mmd y docs/diagrams/c4_container.mmd (Mermaid C4; protocolos en relaciones del nivel 2).
-Modelo: Sonnet. Temperatura: 0.2.
+@prompts_enhanced/c4_enhanced.md @docs/prd.md @docs/adr/0001-estilo-arquitectonico.md @docs/adr/0002-patron-ipc.md
+Sigue exactamente las instrucciones del prompt. Genera docs/diagrams/c4_context.mmd y docs/diagrams/c4_container.mmd
+Modelo: Opus. Temperatura: 0.2
+
+Luego anexar metricas a @prompts_enhanced/c4_enhanced.md
 ```
 
 ---
 
 ## Métricas
 
-Indicador PRD: ítems **V1–V8** cumplidos (máx. 8/8). Detalle y tabla de 3+3 corridas: sección **## Métrica** en [prd_enhanced.md](prompts_enhanced/prd_enhanced.md) (cuando la completes).
+### PRD — indicador V1–V8 (máx. 8/8)
+
+Prompt: [prd_enhanced.md](prompts_enhanced/prd_enhanced.md) · Modelo: Sonnet · Temperatura: 0.2
+
+| Corrida | V1 | V2 | V3 | V4 | V5 | V6 | V7 | V8 | Total |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Run 1 | S | S | S | S | S | S | S | S | **8/8** |
+| Run 2 | S | S | S | S | S | S | S | S | **8/8** |
+| Run 3 | S | S | S | S | S | S | S | S | **8/8** |
+
+Tasa de éxito: **3/3 = 100 %**
+
+---
+
+### FSD — indicador C-01–C-08 (máx. 8/8)
+
+Prompt: [fsd_enhanced.md](prompts_enhanced/fsd_enhanced.md) · Modelo: Sonnet · Temperatura: 0.2
+
+| Corrida | C-01 | C-02 | C-03 | C-04 | C-05 | C-06 | C-07 | C-08 | Total |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Run 1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+
+Tasa de éxito: **3/3 = 100 %**
+
+---
+
+### ADR-0001 (`estilo-arquitectonico`) — indicador A-01–A-08 (máx. 8/8)
+
+Prompt: [adr_enhanced.md](prompts_enhanced/adr_enhanced.md) · Modelo: Sonnet 4.6 · Temperatura: 0.3
+
+| Corrida | A-01 | A-02 | A-03 | A-04 | A-05 | A-06 | A-07 | A-08 | Total |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Run 1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+
+Tasa de éxito: **3/3 = 100 %**
+
+---
+
+### ADR-0002 (`patron-ipc`) — indicador A-01–A-08 (máx. 8/8)
+
+Prompt: [adr_enhanced.md](prompts_enhanced/adr_enhanced.md) · Modelo: Sonnet 4.6 · Temperatura: 0.3
+
+| Corrida | A-01 | A-02 | A-03 | A-04 | A-05 | A-06 | A-07 | A-08 | Total |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Run 1 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+| Run 3 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | **8/8** |
+
+Tasa de éxito: **3/3 = 100 %**
+
+---
+
+### C4 — checklist de revisión (C1.1–C2.10 + CC.1–CC.3)
+
+Prompt: [c4_enhanced.md](prompts_enhanced/c4_enhanced.md) · Modelo: Sonnet/Opus · Temperatura: 0.2
+
+| Corrida | Nivel 1 válido | Nivel 2 válido | System_Ext (esp. 4) | Containers/Db/Queue (esp. ≥ 15) | Rels sin protocolo (esp. 0) |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Run 1 | ✓ | ✓ | 4/4 | 17 | 0 |
+| Run 2 | ✓ | ✓ | 4/4 | 18 | 0 |
+| Run 3 | ✓ | ✓ | 4/4 | 18 | 0 |
+
+Tasa de éxito: **3/3 = 100 %** · Detalle completo en [c4_enhanced.md](prompts_enhanced/c4_enhanced.md).
